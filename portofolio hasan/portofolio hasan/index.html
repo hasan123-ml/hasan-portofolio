@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio WebXP — HASAN | Level Up Your Dreams</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Pixel Art Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #161320;
+      --bg-panel: #231e33;
+      --accent-blue: #89b4fa;
+      --accent-cyan: #74c7ec;
+      --accent-gold: #f9e2af;
+      --accent-purple: #4a4468;
+      --text-cream: #f2efe9;
+    }
+
+    * {
+      box-sizing: border-box;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: 'Silkscreen', monospace;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    .font-pixel-title {
+      font-family: 'Press Start 2P', monospace;
+    }
+
+    .font-pixel-body {
+      font-family: 'Silkscreen', monospace;
+    }
+
+    .font-pixel-terminal {
+      font-family: 'VT323', monospace;
+    }
+
+    /* Chunky Pixel Title Shadow */
+    .title-shadow {
+      text-shadow: 4px 4px 0px #09080d, -2px -2px 0px #2b2540;
+    }
+
+    /* Pixel Box Styling */
+    .pixel-box {
+      background-color: #1b1729;
+      border: 4px solid #3c3557;
+      box-shadow:
+        inset 0 0 0 2px #0e0c17,
+        0 6px 0 #09080d;
+    }
+
+    .pixel-btn {
+      position: relative;
+      transition: transform 0.08s steps(2), filter 0.1s;
+      cursor: pointer;
+    }
+
+    .pixel-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    .pixel-btn:active {
+      transform: translateY(2px);
+    }
+
+    .pixel-btn-blue {
+      background-color: #89b4fa;
+      color: #161320;
+      border-top: 3px solid #bed7ff;
+      border-left: 3px solid #bed7ff;
+      border-right: 3px solid #587eb8;
+      border-bottom: 3px solid #587eb8;
+      box-shadow: 0 3px 0 #0b0a10;
+    }
+
+    .pixel-btn-gold {
+      background-color: #f9e2af;
+      color: #161320;
+      border-top: 3px solid #fff3d6;
+      border-left: 3px solid #fff3d6;
+      border-right: 3px solid #b59b62;
+      border-bottom: 3px solid #b59b62;
+      box-shadow: 0 3px 0 #0b0a10;
+    }
+
+    .pixel-btn-purple {
+      background-color: #4a4468;
+      color: #f2efe9;
+      border-top: 3px solid #6c6494;
+      border-left: 3px solid #6c6494;
+      border-right: 3px solid #2e2a42;
+      border-bottom: 3px solid #2e2a42;
+      box-shadow: 0 3px 0 #0b0a10;
+    }
+
+    .pixel-btn-icon {
+      background-color: #89b4fa;
+      color: #161320;
+      border-top: 2px solid #bed7ff;
+      border-left: 2px solid #bed7ff;
+      border-right: 2px solid #5578a3;
+      border-bottom: 2px solid #5578a3;
+      box-shadow: 0 3px 0 #0a090f;
+    }
+
+    .pixel-btn-icon.active-toggle {
+      background-color: #f9e2af;
+      border-top-color: #fff5db;
+      border-left-color: #fff5db;
+    }
+
+    /* Subtle CRT scanline overlay */
+    .crt-overlay {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.16) 50%
+      );
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #161320;
+      border-left: 2px solid #3c3557;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #89b4fa;
+      border: 2px solid #161320;
+    }
+
+    /* Room Canvas Aspect & Responsive Scaling */
+    #roomCanvas {
+      width: 100%;
+      height: auto;
+      max-width: 450px;
+      display: block;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      background-color: rgba(10, 9, 16, 0.88);
+      backdrop-filter: blur(2px);
+    }
+
+    .photo-smooth {
+      image-rendering: auto;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-[#89b4fa] selection:text-[#161320]">
+
+  <!-- Subtle Retro Scanlines -->
+  <div class="crt-overlay fixed inset-0 z-40"></div>
+
+  <!-- Top Status & Quick Section Bar -->
+  <header class="w-full max-w-6xl mx-auto px-4 pt-3 pb-1 flex flex-wrap items-center justify-between gap-2 text-xs text-[#a6adc8] z-10">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 bg-[#f9e2af]"></span>
+      <span class="text-[#f9e2af] font-bold">🕹️ HASAN — LEVEL UP YOUR DREAMS</span>
+      <span class="hidden md:inline text-[#4a4468]">|</span>
+      <span id="roomTimeBadge" class="hidden md:inline text-[#89b4fa]">NIGHT MODE 🌙</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="hidden lg:inline text-[11px]">[WASD / ARROWS] Walk &bull; [SPACE] Interact</span>
+      <button onclick="openModalSection('about')" class="px-2.5 py-1 bg-[#231e33] hover:bg-[#3c3557] text-[#89b4fa] border border-[#4a4468] text-[10px] sm:text-xs cursor-pointer">
+        MENU [ESC]
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN RPG STAGE CONTAINER -->
+  <main class="w-full max-w-6xl mx-auto px-4 py-2 sm:py-4 flex-1 flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-6 lg:gap-10 z-10">
+
+    <!-- LEFT COLUMN: Title + Quick Nav + Character Portrait / Photo -->
+    <section class="w-full lg:w-5/12 flex flex-col justify-between items-center lg:items-start pt-1 lg:pt-4">
+      
+      <!-- Chunky Pixel Title & Intro -->
+      <div class="text-center lg:text-left mb-4 lg:mb-0 select-none w-full">
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 mb-2 bg-[#231e33] border border-[#4a4468] text-[10px] sm:text-xs text-[#f9e2af]">
+          <span>🕹️ HASAN</span>
+          <span class="text-[#6c7086]">&bull;</span>
+          <span class="text-[#74c7ec]">LEVEL UP YOUR DREAMS</span>
+        </div>
+
+        <h1 class="font-pixel-title text-3xl sm:text-4xl md:text-[42px] leading-snug tracking-tight text-[#f2efe9] title-shadow">
+          Portfolio<br />
+          <span class="inline-block mt-1">Web<span class="text-[#89b4fa]">XP</span></span>
+        </h1>
+
+        <p class="mt-2.5 text-xs sm:text-sm text-[#cdd6f4] font-bold">
+          HELLO, I'M HASAN!
+        </p>
+        <p class="mt-1 text-xs text-[#a6adc8] max-w-md mx-auto lg:mx-0 leading-relaxed">
+          Muhammad Hassan Abdullah Alfaadhil — pelajar yang suka membaca, berolahraga, dan bermain game. Selamat datang di dunia kecil saya!
+        </p>
+
+        <!-- Primary Hero Action Buttons -->
+        <div class="mt-3.5 flex flex-wrap justify-center lg:justify-start gap-2.5">
+          <button onclick="focusObject('trophies', true)" class="pixel-btn pixel-btn-gold px-3.5 py-2 text-xs font-bold">
+            🏆 LIHAT PRESTASI
+          </button>
+          <button onclick="focusObject('contact', true)" class="pixel-btn pixel-btn-blue px-3.5 py-2 text-xs font-bold">
+            ✉️ HUBUNGI SAYA
+          </button>
+        </div>
+
+        <!-- 5 Numbered Navigation Sections -->
+        <div class="mt-4 flex flex-wrap justify-center lg:justify-start gap-1.5">
+          <button onclick="openModalSection('about')" class="px-2 py-1 text-[10px] sm:text-[11px] bg-[#231e33] hover:bg-[#3c3557] text-[#89b4fa] border border-[#4a4468] cursor-pointer">
+            01. ABOUT ME
+          </button>
+          <button onclick="openModalSection('trophies')" class="px-2 py-1 text-[10px] sm:text-[11px] bg-[#231e33] hover:bg-[#3c3557] text-[#f9e2af] border border-[#4a4468] cursor-pointer">
+            02. ACHIEVEMENTS
+          </button>
+          <button onclick="openModalSection('skills')" class="px-2 py-1 text-[10px] sm:text-[11px] bg-[#231e33] hover:bg-[#3c3557] text-[#74c7ec] border border-[#4a4468] cursor-pointer">
+            03. SKILLS & INTERESTS
+          </button>
+          <button onclick="openModalSection('gallery')" class="px-2 py-1 text-[10px] sm:text-[11px] bg-[#231e33] hover:bg-[#3c3557] text-[#89b4fa] border border-[#4a4468] cursor-pointer">
+            04. PIXEL MEMORY / GALLERY
+          </button>
+          <button onclick="openModalSection('contact')" class="px-2 py-1 text-[10px] sm:text-[11px] bg-[#231e33] hover:bg-[#3c3557] text-[#a6e3a1] border border-[#4a4468] cursor-pointer">
+            05. CONTACT
+          </button>
+        </div>
+      </div>
+
+      <!-- Character Bust Portrait (Desktop Left Bottom, matching reference) -->
+      <div class="hidden lg:flex flex-col items-start mt-auto relative w-full max-w-[350px] pt-2">
+        <div class="relative w-64 h-60 flex items-end justify-center group">
+          <!-- Pastel Blue Geometric Triangle Backdrop -->
+          <svg viewBox="0 0 200 200" class="w-full h-full overflow-visible">
+            <polygon points="15,40 180,92 52,195" fill="#89b4fa" />
+            <polygon points="22,48 170,95 55,187" fill="none" stroke="#161320" stroke-width="3" opacity="0.25" />
+          </svg>
+
+          <!-- Mode A: Pixel Art Character Portrait Canvas -->
+          <canvas id="portraitCanvasDesktop" width="128" height="128" class="w-52 h-52 absolute bottom-0 left-7 pointer-events-none"></canvas>
+
+          <!-- Mode B: Real Photo Portrait (PORKAB Sumbawa 2025 / Uploaded Photo) -->
+          <div id="photoPortraitDesktop" class="hidden w-44 h-44 absolute bottom-2 left-10 border-4 border-[#161320] bg-[#231e33] shadow-xl overflow-hidden">
+            <img id="hasanProfileImgDesktop" src="./assets/porkab-hasan-2025.jpg" alt="Foto Hasan PORKAB Sumbawa 2025" class="w-full h-full object-cover object-top photo-smooth" onerror="handleProfileImgError(this)" />
+          </div>
+
+          <!-- Toggle Pixel / Real Photo + Upload Button -->
+          <div class="absolute -top-2 right-0 flex gap-1.5 z-20">
+            <button onclick="togglePortraitMode()" title="Ganti antara Pixel Avatar & Foto Podium PORKAB" class="px-2 py-1 bg-[#231e33] hover:bg-[#89b4fa] hover:text-[#161320] text-[#89b4fa] border border-[#4a4468] text-[10px] font-bold cursor-pointer shadow">
+              🔄 PIXEL / FOTO
+            </button>
+            <label title="Upload Foto Profil dari Perangkatmu" class="px-2 py-1 bg-[#231e33] hover:bg-[#f9e2af] hover:text-[#161320] text-[#f9e2af] border border-[#4a4468] text-[10px] font-bold cursor-pointer shadow">
+              📷 UPLOAD
+              <input type="file" accept="image/*" onchange="handleProfileUpload(event)" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: Top Toolbar + Top-Down Pixel Room + RPG Dialogue Box -->
+    <section class="w-full lg:w-7/12 flex flex-col items-center justify-center">
+
+      <!-- Top 4-Icon Pixel Toolbar -->
+      <div class="flex items-center justify-center gap-2 mb-3 z-20" role="toolbar" aria-label="Room Controls">
+        <button id="btnHome" onclick="resetRoom()" title="Home: Reset Posisi Karakter" class="pixel-btn pixel-btn-icon w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7 1h2v1h1v1h1v1h1v1h1v1h1v2h-2v6H9v-4H7v4H4V8H2V6h1V5h1V4h1V3h1V2h1V1z"/>
+          </svg>
+        </button>
+
+        <button id="btnEye" onclick="toggleHotspots()" title="Eye: Sorot Semua Objek Interaktif" class="pixel-btn pixel-btn-icon w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M5 4h6v1h2v1h1v1h1v2h-1v1h-1v1h-2v1H5v-1H3v-1H2V9H1V7h1V6h1V5h2V4zm1 2v1H5v2h1v1h4V9h1V7h-1V6H6zm1 1h2v2H7V7z"/>
+          </svg>
+        </button>
+
+        <button id="btnSound" onclick="toggleSound()" title="Sound: Efek Suara 8-Bit & Musik Latar" class="pixel-btn pixel-btn-icon w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7 2h2v12H7v-1H6v-1H5v-1H2V5h3V4h1V3h1V2zm4 3h1v6h-1V5zm2-2h1v10h-1V3z"/>
+          </svg>
+        </button>
+
+        <button id="btnExpand" onclick="toggleDayNight()" title="Theme: Pencahayaan Malam / Siang" class="pixel-btn pixel-btn-icon w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7 2h2v1h1v1h1v1h1v1H4V5h1V4h1V3h1V2zm-3 8h8v1h-1v1h-1v1H9v1H7v-1H6v-1H5v-1H4v-1z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Interactive Pixel Room Frame -->
+      <div class="relative flex flex-col items-center justify-center w-full max-w-[450px]">
+        <canvas id="roomCanvas" width="320" height="290" class="rounded-sm shadow-2xl"></canvas>
+
+        <!-- Mobile D-Pad Overlay -->
+        <div class="flex sm:hidden items-center justify-between w-full px-2 mt-2 text-xs text-[#a6adc8]">
+          <span>Tap objek di kamar untuk memilih</span>
+          <div class="flex gap-1">
+            <button onclick="movePlayerBy(0,-1)" class="w-8 h-8 bg-[#231e33] border border-[#4a4468] text-[#89b4fa] active:bg-[#89b4fa] active:text-[#161320]">▲</button>
+            <button onclick="movePlayerBy(-1,0)" class="w-8 h-8 bg-[#231e33] border border-[#4a4468] text-[#89b4fa] active:bg-[#89b4fa] active:text-[#161320]">◀</button>
+            <button onclick="movePlayerBy(0,1)" class="w-8 h-8 bg-[#231e33] border border-[#4a4468] text-[#89b4fa] active:bg-[#89b4fa] active:text-[#161320]">▼</button>
+            <button onclick="movePlayerBy(1,0)" class="w-8 h-8 bg-[#231e33] border border-[#4a4468] text-[#89b4fa] active:bg-[#89b4fa] active:text-[#161320]">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RPG Dialogue Box -->
+      <div class="w-full max-w-[550px] mt-4 relative">
+        
+        <!-- Mobile/Tablet Mini Portrait + Name Badge Row -->
+        <div class="flex items-end justify-between pr-2 mb-[-4px] pl-3 relative z-10">
+          <div class="flex items-end gap-2.5">
+            <!-- Small Portrait visible only on mobile/tablet (< lg) -->
+          <div onclick="togglePortraitMode()" title="Tap untuk ganti Pixel / Foto" class="lg:hidden relative w-14 h-14 bg-[#89b4fa] border-2 border-[#161320] overflow-hidden shrink-0 shadow-md cursor-pointer">
+            <canvas id="portraitCanvasMobile" width="64" height="64" class="w-full h-full"></canvas>
+            <img id="hasanProfileImgMobile" src="./assets/porkab-hasan-2025.jpg" alt="Hasan" class="hidden w-full h-full object-cover object-top photo-smooth" onerror="handleProfileImgError(this)" />
+          </div>
+
+          <!-- Character Name Badge -->
+            <div class="bg-[#89b4fa] text-[#161320] px-4 py-1 text-xs sm:text-sm font-bold tracking-wider border-t-2 border-l-2 border-r-2 border-[#cbe1fc] shadow-md">
+              <span id="characterNameBadge">Hasan</span>
+            </div>
+          </div>
+
+          <!-- Mobile Portrait Mode Switcher -->
+          <div class="lg:hidden flex gap-1 mb-1">
+            <button onclick="togglePortraitMode()" class="px-2 py-0.5 bg-[#231e33] text-[#89b4fa] border border-[#4a4468] text-[10px]">
+              🔄 PIXEL/FOTO
+            </button>
+          </div>
+        </div>
+
+        <!-- Dialogue Content Container -->
+        <div class="pixel-box p-4 sm:p-5 min-h-[130px] flex flex-col justify-between relative">
+          <p id="dialogueText" class="text-xs sm:text-sm md:text-[14px] leading-relaxed text-[#f2efe9] min-h-[52px]">
+            HELLO, I'M HASAN! Muhammad Hassan Abdullah Alfaadhil — pelajar yang suka membaca, berolahraga, dan bermain game. Selamat datang di dunia kecil saya!
+          </p>
+
+          <!-- Action Buttons (LIHAT PRESTASI & HUBUNGI SAYA) -->
+          <div class="flex flex-wrap items-center justify-end gap-2.5 mt-3">
+            <button id="btnLogin" onclick="triggerPrimaryAction()" class="pixel-btn pixel-btn-blue px-3.5 sm:px-4 py-2 text-xs font-bold tracking-wider uppercase">
+              LIHAT PRESTASI
+            </button>
+            <button id="btnCancel" onclick="triggerSecondaryAction()" class="pixel-btn pixel-btn-purple px-3.5 sm:px-4 py-2 text-xs font-bold tracking-wider uppercase">
+              HUBUNGI SAYA
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full text-center py-2 text-[11px] text-[#6c7086] z-10">
+    Portfolio WebXP &copy; 2026 &bull; Muhammad Hassan Abdullah Alfaadhil (@sanzuzezo)
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- INTERACTIVE RPG WINDOW MODAL                                          -->
+  <!-- ===================================================================== -->
+  <div id="rpgModal" class="fixed inset-0 modal-backdrop z-50 hidden items-center justify-center p-2.5 sm:p-5">
+    <div class="pixel-box w-full max-w-4xl max-h-[90vh] flex flex-col bg-[#1b1729] border-4 border-[#89b4fa] shadow-2xl overflow-hidden">
+      
+      <!-- Retro Window Title Bar -->
+      <div class="bg-[#89b4fa] text-[#161320] px-4 py-2.5 flex items-center justify-between border-b-4 border-[#3c3557]">
+        <div class="flex items-center gap-2.5">
+          <span id="modalIcon" class="text-base">🏆</span>
+          <h2 id="modalTitle" class="font-pixel-title text-[10px] sm:text-xs uppercase tracking-tight">HASAN://ACHIEVEMENTS.EXE</h2>
+        </div>
+        <button onclick="closeModal()" class="bg-[#161320] text-[#f2efe9] hover:bg-[#f38ba8] hover:text-[#161320] px-2.5 py-1 text-xs font-bold border border-[#3c3557] cursor-pointer">
+          X
+        </button>
+      </div>
+
+      <!-- Window Navigation Tabs (All 5 Portfolio Sections + Mini-Game) -->
+      <div class="bg-[#231e33] px-3 py-2 flex flex-wrap gap-1.5 border-b-2 border-[#3c3557]">
+        <button onclick="openModalSection('about')" data-tab="about" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          01. ABOUT ME
+        </button>
+        <button onclick="openModalSection('trophies')" data-tab="trophies" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          02. ACHIEVEMENTS
+        </button>
+        <button onclick="openModalSection('skills')" data-tab="skills" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          03. SKILLS & INTERESTS
+        </button>
+        <button onclick="openModalSection('gallery')" data-tab="gallery" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          04. PIXEL MEMORY / GALLERY
+        </button>
+        <button onclick="openModalSection('console')" data-tab="console" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          🏸 SMASH 8-BIT
+        </button>
+        <button onclick="openModalSection('contact')" data-tab="contact" class="modal-tab px-2.5 py-1 text-[11px] bg-[#2e2842] text-[#f2efe9] hover:bg-[#89b4fa] hover:text-[#161320] cursor-pointer">
+          05. CONTACT
+        </button>
+      </div>
+
+      <!-- Modal Dynamic Body -->
+      <div id="modalBody" class="p-4 sm:p-6 overflow-y-auto flex-1 text-sm leading-relaxed text-[#e6e2dc]">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Window Footer -->
+      <div class="bg-[#12101a] px-4 py-2 border-t-2 border-[#3c3557] flex items-center justify-between text-[11px] text-[#89b4fa]">
+        <span id="modalStatusText">PLAYER: MUHAMMAD HASSAN ABDULLAH ALFAADHIL</span>
+        <button onclick="closeModal()" class="pixel-btn pixel-btn-purple px-3 py-1 text-xs">
+          TUTUP [ESC]
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- LIGHTBOX PREVIEW MODAL FOR GALLERY PHOTOS                             -->
+  <!-- ===================================================================== -->
+  <div id="lightboxModal" class="fixed inset-0 bg-black/90 z-[60] hidden items-center justify-center p-4" onclick="closeLightbox(event)">
+    <div class="pixel-box max-w-2xl w-full bg-[#1b1729] border-4 border-[#f9e2af] overflow-hidden" onclick="event.stopPropagation()">
+      <div class="bg-[#f9e2af] text-[#161320] px-4 py-2 flex items-center justify-between font-bold text-xs">
+        <span id="lightboxTitle">PIXEL MEMORY PREVIEW</span>
+        <button onclick="closeLightbox()" class="bg-[#161320] text-[#f2efe9] px-2 py-0.5 cursor-pointer">X</button>
+      </div>
+      <div id="lightboxMedia" class="p-3 bg-[#12101a] flex items-center justify-center max-h-[65vh] overflow-hidden">
+        <!-- Full image or SVG -->
+      </div>
+      <div class="p-4 bg-[#231e33] flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p id="lightboxCaption" class="text-xs sm:text-sm font-bold text-[#f9e2af]"></p>
+          <p id="lightboxDesc" class="text-xs text-[#cdd6f4] mt-1"></p>
+        </div>
+        <label class="pixel-btn pixel-btn-blue px-3 py-1.5 text-[11px] font-bold cursor-pointer">
+          📂 GANTI DENGAN FILE FOTOMU
+          <input type="file" accept="image/*" onchange="replaceGalleryItemPhoto(event)" class="hidden" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-[70] hidden bg-[#f9e2af] text-[#161320] px-4 py-3 border-4 border-[#161320] shadow-xl text-xs sm:text-sm font-bold">
+    Notifikasi!
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. 8-BIT WEB AUDIO SYNTHESIZER (NO EXTERNAL AUDIO FILES REQUIRED)
+    // =========================================================================
+    class RetroSoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      ensureCtx() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this.ctx = new AudioCtx();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      }
+
+      tone(freq, duration = 0.08, type = 'square', volume = 0.05) {
+        if (!this.enabled) return;
+        try {
+          this.ensureCtx();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(volume, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (err) {
+          // Ignore audio context autoplay errors until user interacts
+        }
+      }
+
+      playBlip() {
+        this.tone(660, 0.04, 'square', 0.03);
+      }
+
+      playStep() {
+        this.tone(210, 0.045, 'triangle', 0.04);
+      }
+
+      playSelect() {
+        this.tone(523.25, 0.07, 'square', 0.05);
+        setTimeout(() => this.tone(783.99, 0.09, 'square', 0.05), 65);
+      }
+
+      playCancel() {
+        this.tone(329.63, 0.07, 'square', 0.04);
+        setTimeout(() => this.tone(246.94, 0.09, 'square', 0.04), 65);
+      }
+
+      playSmash() {
+        this.tone(587.33, 0.06, 'square', 0.06);
+        setTimeout(() => this.tone(880, 0.08, 'triangle', 0.06), 50);
+      }
+
+      toggle() {
+        this.enabled = !this.enabled;
+        if (this.enabled) this.playSelect();
+        return this.enabled;
+      }
+    }
+
+    const sfx = new RetroSoundEngine();
+
+    // =========================================================================
+    // 2. GITHUB PAGES ASSETS CONFIG, HASAN PORTFOLIO DATA & ROOM OBJECTS
+    // =========================================================================
+    /**
+     * Konfigurasi path aset relatif untuk GitHub Pages (tanpa leading slash / backslash).
+     * Letakkan file gambar asli di folder `./assets/` di repository GitHub kamu.
+     * Jika file belum tersedia di `./assets/`, website otomatis memakai ilustrasi pixel-art SVG.
+     */
+    const MEDIA_PATHS = {
+      profilePhoto: "./assets/porkab-hasan-2025.jpg",
+      gallery: [
+        "./assets/ses-ntb-runner-up.jpg",
+        "./assets/porkab-hasan-2025.jpg",
+        "./assets/pbsi-sumbawa-team.jpg",
+        "./assets/sertifikat-esports.jpg",
+        "./assets/juara-3-sekolah.jpg",
+        "./assets/suasana-kompetisi-esports.jpg"
+      ]
+    };
+
+    let showAllHotspots = false;
+    let isDayMode = false;
+    let selectedObjectKey = 'trophies';
+    let typewriterTimer = null;
+    let portraitShowRealPhoto = false;
+    let activeLightboxIndex = 0;
+    let customProfileDataUrl = null;
+
+    // Interactive Objects inside Hasan's Pixel Bedroom
+    const ROOM_OBJECTS = {
+      trophies: {
+        id: 'trophies',
+        name: 'Rak Piala & Medali',
+        x: 112, y: 40, w: 96, h: 78,
+        walkTarget: { x: 158, y: 128 },
+        dialogue: "Rak Piala & Medali Hasan! Ada trofi Runner Up School E-Sport Series NTB & medali PORKAB Sumbawa 2025. Lihat detail prestasi?",
+        loginLabel: "LIHAT PRESTASI",
+        icon: "🏆",
+        modalTitle: "02. ACHIEVEMENTS // TROPHY_CABINET.EXE"
+      },
+      gallery: {
+        id: 'gallery',
+        name: 'Bingkai Foto & Memori',
+        x: 42, y: 22, w: 56, h: 58,
+        walkTarget: { x: 86, y: 116 },
+        dialogue: "04. PIXEL MEMORY / GALLERY — Kumpulan dokumentasi turnamen esports, PORKAB Sumbawa 2025, dan tim PBSI Sumbawa!",
+        loginLabel: "BUKA GALERI",
+        icon: "🖼️",
+        modalTitle: "04. PIXEL MEMORY / GALLERY"
+      },
+      about: {
+        id: 'about',
+        name: 'Meja Belajar & Buku',
+        x: 224, y: 116, w: 66, h: 60,
+        walkTarget: { x: 210, y: 150 },
+        dialogue: "Meja belajar & buku favoritku! Mau baca profil lengkap (01. ABOUT ME) atau cek 03. SKILLS & INTERESTS?",
+        loginLabel: "ABOUT ME",
+        icon: "📖",
+        modalTitle: "01. ABOUT ME // HASAN_BIO.TXT"
+      },
+      console: {
+        id: 'console',
+        name: 'Konsol Game & Raket',
+        x: 34, y: 94, w: 56, h: 86,
+        walkTarget: { x: 98, y: 146 },
+        dialogue: "Stasiun gaming & olahraga! Mainkan mini-game 8-bit Badminton Smash & Catch sekarang?",
+        loginLabel: "MAIN GAME",
+        icon: "🏸",
+        modalTitle: "ARCADE://BADMINTON_SMASH_8BIT"
+      },
+      contact: {
+        id: 'contact',
+        name: 'Tempat Tidur & Smartphone',
+        x: 184, y: 184, w: 108, h: 82,
+        walkTarget: { x: 175, y: 205 },
+        dialogue: "05. CONTACT — Ingin terhubung via Email (hasanfadhil012@gmail.com) atau Instagram (@sanzuzezo)?",
+        loginLabel: "HUBUNGI SAYA",
+        icon: "✉️",
+        modalTitle: "05. CONTACT // CONNECT_WITH_HASAN"
+      }
+    };
+
+    // 6 Gallery Items with GitHub-friendly ./assets/... paths + Detailed Custom Pixel-Art SVG Fallbacks
+    const GALLERY_ITEMS = [
+      {
+        caption: "Runner Up School E-Sport Series NTB",
+        desc: "Papan simbolis Runner Up School E-Sport Series NTB – MLBB SMP (Rp 1.000.000) – Gelegar Pesona Khazanah Ramadhan 2025.",
+        assetPath: MEDIA_PATHS.gallery[0],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#182232"/>
+            <g transform="translate(30,28) rotate(-8)">
+              <rect x="0" y="0" width="250" height="155" rx="4" fill="#1b5e7a" stroke="#f9e2af" stroke-width="4"/>
+              <rect x="8" y="8" width="234" height="139" fill="none" stroke="#74c7ec" stroke-width="2" stroke-dasharray="6 4"/>
+              <text x="125" y="52" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="18">RUNNER UP</text>
+              <text x="125" y="74" text-anchor="middle" fill="#f9e2af" font-family="Silkscreen, monospace" font-size="10">School E-Sport Series NTB - MLBB SMP</text>
+              <text x="125" y="106" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="15">Rp 1.000.000</text>
+              <rect x="85" y="118" width="80" height="20" rx="10" fill="#f9e2af"/>
+              <text x="125" y="131" text-anchor="middle" fill="#161320" font-family="Silkscreen, monospace" font-size="8" font-weight="bold">SES NTB 2025</text>
+            </g>
+          </svg>`
+      },
+      {
+        caption: "Prestasi PORKAB Sumbawa 2025",
+        desc: "Hasan berdiri di podium Juara 1 Cabor Bulutangkis PORKAB Kabupaten Sumbawa 2025 mengenakan jaket SBC HASAN & membawa medali.",
+        assetPath: MEDIA_PATHS.gallery[1],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#e8ece6"/>
+            <rect x="0" y="0" width="320" height="44" fill="#1f4e3d"/>
+            <text x="160" y="24" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="13">PORKAB SUMBAWA 2025</text>
+            <text x="160" y="38" text-anchor="middle" fill="#f9e2af" font-family="Silkscreen, monospace" font-size="9">PEKAN OLAHRAGA KABUPATEN - BULUTANGKIS</text>
+            <!-- Podium #1 -->
+            <rect x="105" y="175" width="110" height="45" fill="#d62828"/>
+            <text x="160" y="205" text-anchor="middle" fill="#f9e2af" font-family="'Press Start 2P', monospace" font-size="18">1</text>
+            <!-- Hasan Pixel Athlete -->
+            <rect x="148" y="54" width="24" height="20" fill="#1b1729"/>
+            <rect x="150" y="64" width="20" height="16" fill="#d99b78"/>
+            <rect x="154" y="69" width="3" height="3" fill="#161320"/>
+            <rect x="163" y="69" width="3" height="3" fill="#161320"/>
+            <!-- Athletic Jacket SBC HASAN -->
+            <rect x="138" y="82" width="44" height="44" fill="#1e293b"/>
+            <polygon points="138,126 182,82 182,126" fill="#eab308"/>
+            <!-- Arms stretched holding medals -->
+            <rect x="92" y="84" width="46" height="12" fill="#1e293b"/>
+            <rect x="182" y="84" width="46" height="12" fill="#1e293b"/>
+            <!-- Medals -->
+            <circle cx="94" cy="112" r="9" fill="#f9e2af" stroke="#b45309" stroke-width="2"/>
+            <circle cx="226" cy="112" r="9" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+            <!-- Pants & Shoes -->
+            <rect x="142" y="126" width="16" height="42" fill="#94a3b8"/>
+            <rect x="162" y="126" width="16" height="42" fill="#94a3b8"/>
+            <rect x="138" y="168" width="20" height="7" fill="#ef4444"/>
+            <rect x="162" y="168" width="20" height="7" fill="#3b82f6"/>
+          </svg>`
+      },
+      {
+        caption: "Tim bulutangkis PBSI Sumbawa",
+        desc: "Kebersamaan skuad bulutangkis PBSI Kabupaten Sumbawa di podium kejuaraan provinsi dengan medali & bendera kebanggaan.",
+        assetPath: MEDIA_PATHS.gallery[2],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#2a324b"/>
+            <rect x="0" y="185" width="320" height="35" fill="#dc2626"/>
+            <!-- Team Athletes in Blue Tracksuits -->
+            ${[55, 105, 155, 205, 255].map((x, idx) => `
+              <g transform="translate(${x}, ${idx % 2 === 0 ? 55 : 75})">
+                <rect x="-10" y="0" width="20" height="14" fill="#161320"/>
+                <rect x="-8" y="8" width="16" height="12" fill="#d99b78"/>
+                <rect x="-14" y="22" width="28" height="36" fill="#0284c7"/>
+                <circle cx="0" cy="36" r="5" fill="#f9e2af"/>
+              </g>
+            `).join('')}
+            <!-- PBSI Kabupaten Sumbawa Banner -->
+            <rect x="85" y="130" width="150" height="58" fill="#facc15" stroke="#161320" stroke-width="3"/>
+            <rect x="85" y="160" width="150" height="28" fill="#15803d"/>
+            <text x="160" y="151" text-anchor="middle" fill="#161320" font-family="'Press Start 2P', monospace" font-size="12">PBSI</text>
+            <text x="160" y="177" text-anchor="middle" fill="#ffffff" font-family="Silkscreen, monospace" font-size="9" font-weight="bold">KABUPATEN SUMBAWA</text>
+          </svg>`
+      },
+      {
+        caption: "Koleksi sertifikat dan penghargaan esports",
+        desc: "Deretan piagam & sertifikat Juara 1 dan Juara 3 dari berbagai turnamen Mobile Legends & kompetisi esports pelajar.",
+        assetPath: MEDIA_PATHS.gallery[3],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#231e33"/>
+            <!-- Certificate 1 -->
+            <rect x="25" y="22" width="125" height="80" fill="#f8fafc" stroke="#89b4fa" stroke-width="3"/>
+            <text x="87" y="48" text-anchor="middle" fill="#1e293b" font-family="'Press Start 2P', monospace" font-size="8">SERTIFIKAT</text>
+            <rect x="52" y="56" width="70" height="16" fill="#f9e2af"/>
+            <text x="87" y="67" text-anchor="middle" fill="#161320" font-family="Silkscreen, monospace" font-size="9" font-weight="bold">JUARA 1</text>
+            <!-- Certificate 2 -->
+            <rect x="170" y="22" width="125" height="80" fill="#1e293b" stroke="#f9e2af" stroke-width="3"/>
+            <text x="232" y="55" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="9">JUARA 3</text>
+            <text x="232" y="74" text-anchor="middle" fill="#74c7ec" font-family="Silkscreen, monospace" font-size="8">MLBB TOURNAMENT</text>
+            <!-- Certificate 3 -->
+            <rect x="95" y="116" width="130" height="82" fill="#fffbeb" stroke="#f59e0b" stroke-width="3"/>
+            <text x="160" y="142" text-anchor="middle" fill="#92400e" font-family="Silkscreen, monospace" font-size="8" font-weight="bold">OFFICIAL EVENT</text>
+            <text x="160" y="164" text-anchor="middle" fill="#161320" font-family="'Press Start 2P', monospace" font-size="10">JUARA 1</text>
+            <circle cx="160" cy="182" r="7" fill="#f59e0b"/>
+          </svg>`
+      },
+      {
+        caption: "Juara 3 kompetisi esports sekolah",
+        desc: "Momen penyerahan papan penghargaan Juara 3 turnamen Main Bareng Dunia Games x Telkomsel bersama tim sekolah.",
+        assetPath: MEDIA_PATHS.gallery[4],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#2e293e"/>
+            <rect x="15" y="15" width="150" height="120" fill="#1d4ed8" stroke="#93c5fd" stroke-width="2"/>
+            <text x="90" y="45" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="9">MAIN BARENG</text>
+            <text x="90" y="62" text-anchor="middle" fill="#f9e2af" font-family="Silkscreen, monospace" font-size="8">DUNIA GAMES x TELKOMSEL</text>
+            <!-- Players holding Red Juara 3 Board -->
+            <rect x="65" y="112" width="180" height="75" fill="#dc2626" stroke="#ffffff" stroke-width="4"/>
+            <text x="155" y="136" text-anchor="middle" fill="#f9e2af" font-family="Silkscreen, monospace" font-size="9" font-weight="bold">MAIN BARENG</text>
+            <text x="155" y="164" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="16">JUARA 3</text>
+          </svg>`
+      },
+      {
+        caption: "Suasana kompetisi esports",
+        desc: "Fokus penuh saat bertanding bersama tim di panggung utama School E-Sport Series Nusa Tenggara Barat 2025.",
+        assetPath: MEDIA_PATHS.gallery[5],
+        customDataUrl: null,
+        svgIllustration: `
+          <svg viewBox="0 0 320 220" class="w-full h-full">
+            <rect width="320" height="220" fill="#162127"/>
+            <rect x="20" y="18" width="280" height="72" fill="#1b4332" stroke="#f9e2af" stroke-width="2"/>
+            <text x="160" y="48" text-anchor="middle" fill="#ffffff" font-family="'Press Start 2P', monospace" font-size="10">SCHOOL E-SPORT SERIES</text>
+            <text x="160" y="68" text-anchor="middle" fill="#f9e2af" font-family="Silkscreen, monospace" font-size="9">NUSA TENGGARA BARAT - 2025</text>
+            <!-- Tournament Table & Team -->
+            <polygon points="40,145 280,145 305,210 15,210" fill="#334155" stroke="#89b4fa" stroke-width="2"/>
+            ${[75, 130, 185, 240].map(px => `
+              <g transform="translate(${px}, 102)">
+                <rect x="-10" y="0" width="20" height="14" fill="#0f172a"/>
+                <rect x="-8" y="8" width="16" height="10" fill="#d99b78"/>
+                <rect x="-14" y="20" width="28" height="26" fill="#06b6d4"/>
+                <rect x="-6" y="28" width="12" height="7" fill="#f8fafc"/>
+              </g>
+            `).join('')}
+          </svg>`
+      }
+    ];
+
+    const SKILLS_LIST = [
+      { name: "BADMINTON", icon: "🏸", level: 95, desc: "Atlet Pelajar & Peraih Medali PORKAB Sumbawa 2025" },
+      { name: "ESPORTS", icon: "🎮", level: 93, desc: "Runner Up School E-Sport Series NTB & Juara Turnamen Sekolah" },
+      { name: "TEAMWORK", icon: "🤝", level: 94, desc: "Komunikasi & strategi tim dalam kompetisi olahraga & esports" },
+      { name: "BASKETBALL", icon: "🏀", level: 85, desc: "Olahraga tim, kelincahan, dan ketahanan fisik" },
+      { name: "SWIMMING", icon: "🏊", level: 84, desc: "Stamina, pernapasan, dan kebugaran tubuh" },
+      { name: "READING", icon: "📚", level: 88, desc: "Membaca buku untuk wawasan, fokus, dan pengembangan diri" }
+    ];
+
+    // =========================================================================
+    // 3. HASAN PIXEL-ART CHARACTER PORTRAIT RENDERER
+    // =========================================================================
+    function drawHasanPortrait(canvasId, isBlinking = false) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const pSize = w / 32;
+      const px = (x, y, pw, ph, color) => {
+        ctx.fillStyle = color;
+        ctx.fillRect(Math.floor(x * pSize), Math.floor(y * pSize), Math.ceil(pw * pSize), Math.ceil(ph * pSize));
+      };
+
+      const hairDark = "#14111c";
+      const hairHighlight = "#2b253d";
+      const skinBase = "#d99b78";
+      const skinShadow = "#b57654";
+      const skinLight = "#ebb494";
+      const jacketDark = "#1e2638";
+      const jacketBlue = "#3b82f6";
+      const jacketGold = "#f9e2af";
+
+      // Athletic Jacket & Shoulders (Inspired by Hasan's SBC / PBSI jacket)
+      px(7, 25, 18, 7, jacketDark);
+      px(5, 27, 22, 5, jacketDark);
+      px(8, 25, 4, 7, jacketBlue);
+      px(20, 25, 4, 7, jacketBlue);
+      px(12, 25, 8, 2, jacketGold); // gold collar/medal ribbon accent
+      px(15, 27, 2, 5, "#89b4fa"); // zipper
+
+      // Neck
+      px(13, 21, 6, 5, skinShadow);
+      px(14, 21, 4, 4, skinBase);
+
+      // Face Shape
+      px(10, 10, 12, 11, skinBase);
+      px(11, 21, 10, 2, skinBase);
+      px(12, 23, 8, 1, skinShadow);
+      px(10, 16, 1, 5, skinShadow);
+      px(21, 16, 1, 5, skinShadow);
+
+      // Ears
+      px(9, 15, 1, 3, skinShadow);
+      px(22, 15, 1, 3, skinShadow);
+
+      // Stylish Textured Short-Top Hair (Matching Hasan's hairstyle)
+      px(9, 5, 14, 6, hairDark);
+      px(8, 7, 16, 5, hairDark);
+      px(9, 11, 2, 3, hairDark);
+      px(21, 11, 2, 3, hairDark);
+      // Textured bangs
+      px(10, 9, 3, 2, hairDark);
+      px(14, 9, 4, 2, hairDark);
+      px(19, 9, 3, 2, hairDark);
+      px(11, 6, 4, 2, hairHighlight);
+      px(17, 6, 3, 2, hairHighlight);
+
+      // Eyebrows
+      px(11, 13, 3, 1, hairDark);
+      px(18, 13, 3, 1, hairDark);
+
+      // Eyes (Normal or Blinking)
+      if (isBlinking) {
+        px(11, 15, 3, 1, hairDark);
+        px(18, 15, 3, 1, hairDark);
+      } else {
+        px(11, 14, 3, 3, hairDark);
+        px(18, 14, 3, 3, hairDark);
+        px(12, 14, 1, 1, "#ffffff");
+        px(19, 14, 1, 1, "#ffffff");
+      }
+
+      // Nose & Smile
+      px(15, 17, 2, 2, skinShadow);
+      px(13, 19, 6, 1, skinLight);
+      px(14, 20, 4, 1, skinShadow);
+    }
+
+    function togglePortraitMode() {
+      portraitShowRealPhoto = !portraitShowRealPhoto;
+      const deskCanvas = document.getElementById('portraitCanvasDesktop');
+      const deskPhotoBox = document.getElementById('photoPortraitDesktop');
+      const mobCanvas = document.getElementById('portraitCanvasMobile');
+      const mobImg = document.getElementById('hasanProfileImgMobile');
+
+      if (portraitShowRealPhoto) {
+        if (deskCanvas) deskCanvas.classList.add('hidden');
+        if (deskPhotoBox) deskPhotoBox.classList.remove('hidden');
+        if (mobCanvas) mobCanvas.classList.add('hidden');
+        if (mobImg) mobImg.classList.remove('hidden');
+        showToast("Mode Foto Profil Aktif 📸");
+      } else {
+        if (deskCanvas) deskCanvas.classList.remove('hidden');
+        if (deskPhotoBox) deskPhotoBox.classList.add('hidden');
+        if (mobCanvas) mobCanvas.classList.remove('hidden');
+        if (mobImg) mobImg.classList.add('hidden');
+        showToast("Mode Pixel Avatar Aktif 🕹️");
+      }
+      sfx.playSelect();
+    }
+
+    // Fallback SVG if local ./assets/ image file isn't found in folder yet
+    function handleProfileImgError(imgEl) {
+      if (imgEl.dataset.fallbackApplied === "1") return;
+      imgEl.dataset.fallbackApplied = "1";
+
+      const fallbackSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+          <rect width="160" height="160" fill="#231e33"/>
+          <rect x="0" y="0" width="160" height="28" fill="#1f4e3d"/>
+          <text x="80" y="18" text-anchor="middle" fill="#f9e2af" font-family="monospace" font-size="11" font-weight="bold">PORKAB 2025</text>
+          <circle cx="80" cy="64" r="22" fill="#d99b78"/>
+          <path d="M58 56 Q80 34 102 56 Z" fill="#161320"/>
+          <rect x="46" y="90" width="68" height="70" fill="#1e293b"/>
+          <polygon points="46,160 114,90 114,160" fill="#eab308"/>
+          <circle cx="42" cy="126" r="11" fill="#f9e2af"/>
+          <circle cx="118" cy="126" r="11" fill="#e2e8f0"/>
+          <text x="80" y="148" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold">HASAN #1</text>
+        </svg>
+      `.trim();
+      imgEl.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(fallbackSvg)}`;
+    }
+
+    function applyProfileSrc(srcValue) {
+      const deskImg = document.getElementById('hasanProfileImgDesktop');
+      const mobImg = document.getElementById('hasanProfileImgMobile');
+      [deskImg, mobImg].forEach(el => {
+        if (!el) return;
+        el.dataset.fallbackApplied = "0";
+        el.src = srcValue;
+      });
+    }
+
+    function handleProfileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        customProfileDataUrl = ev.target.result;
+        applyProfileSrc(customProfileDataUrl);
+        if (!portraitShowRealPhoto) togglePortraitMode();
+        showToast("Foto profil berhasil dipasang! ✨");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function exportMediaConfigJson() {
+      try {
+        const exportPayload = {
+          mediaPaths: {
+            profilePhoto: customProfileDataUrl ? "./assets/porkab-hasan-2025.jpg" : MEDIA_PATHS.profilePhoto,
+            gallery: GALLERY_ITEMS.map((item, i) =>
+              item.customDataUrl ? `./assets/gallery-0${i + 1}.jpg` : item.assetPath
+            )
+          },
+          hasCustomUploads: {
+            profile: Boolean(customProfileDataUrl),
+            galleryIndices: GALLERY_ITEMS
+              .map((item, idx) => (item.customDataUrl ? idx + 1 : null))
+              .filter(Boolean)
+          }
+        };
+
+        const jsonStr = JSON.stringify(exportPayload, null, 2);
+        const temp = document.createElement('textarea');
+        temp.value = jsonStr;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        sfx.playSelect();
+        showToast("Konfigurasi JSON MEDIA_PATHS disalin ke clipboard! 📋");
+      } catch (err) {
+        showToast("Gagal mengekspor konfigurasi JSON.");
+      }
+    }
+
+    // =========================================================================
+    // 4. TOP-DOWN PIXEL BEDROOM CANVAS ENGINE (HASAN'S ROOM)
+    // =========================================================================
+    const roomCanvas = document.getElementById('roomCanvas');
+    const rCtx = roomCanvas.getContext('2d');
+
+    const player = {
+      x: 158,
+      y: 138,
+      targetX: 158,
+      targetY: 138,
+      speed: 2.3,
+      moving: false
+    };
+
+    let hoveredObjectKey = null;
+    let tickCount = 0;
+
+    function drawPixelRect(x, y, w, h, color) {
+      rCtx.fillStyle = color;
+      rCtx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+    }
+
+    function drawWhitePixelOutline(obj, isPulsing = false) {
+      rCtx.save();
+      if (isPulsing) {
+        rCtx.globalAlpha = 0.45 + 0.55 * Math.sin(tickCount * 0.12);
+      }
+      const { x, y, w, h } = obj;
+      rCtx.fillStyle = "#ffffff";
+      rCtx.fillRect(x - 2, y - 3, w + 4, 2);
+      rCtx.fillRect(x - 2, y + h + 1, w + 4, 2);
+      rCtx.fillRect(x - 3, y - 2, 2, h + 4);
+      rCtx.fillRect(x + w + 1, y - 2, 2, h + 4);
+      rCtx.restore();
+    }
+
+    function renderRoom() {
+      tickCount++;
+      rCtx.clearRect(0, 0, roomCanvas.width, roomCanvas.height);
+
+      // 1. Stepped Dark Room Frame
+      drawPixelRect(24, 14, 272, 266, "#0b0a10");
+      drawPixelRect(64, 4, 192, 276, "#0b0a10");
+
+      // 2. Room Walls (#231e33 & #534c70)
+      drawPixelRect(30, 26, 260, 74, "#574f78");
+      drawPixelRect(70, 10, 180, 20, "#574f78");
+      drawPixelRect(30, 86, 260, 12, "#d8d4e6");
+      drawPixelRect(30, 98, 260, 3, "#362f4d");
+
+      // 3. Wooden Floorboards
+      drawPixelRect(30, 101, 260, 173, "#3b3552");
+      for (let fy = 101; fy < 274; fy += 14) {
+        drawPixelRect(30, fy, 260, 2, "#2c273d");
+        const offset = (fy / 14) % 2 === 0 ? 35 : 75;
+        for (let fx = 30 + offset; fx < 285; fx += 70) {
+          drawPixelRect(fx, fy, 2, 14, "#2c273d");
+        }
+      }
+
+      // 4. Pastel Blue Checkered Rug
+      const rugX = 96, rugY = 136, rugW = 128, rugH = 74;
+      drawPixelRect(rugX - 2, rugY - 2, rugW + 4, rugH + 4, "#231e33");
+      const tileW = 16, tileH = 14.8;
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 8; c++) {
+          const isLight = (r + c) % 2 === 0;
+          drawPixelRect(
+            rugX + c * tileW,
+            rugY + r * tileH,
+            tileW,
+            tileH,
+            isLight ? "#89b4fa" : "#74c7ec"
+          );
+        }
+      }
+
+      // 5. WALL PHOTO FRAMES / GALLERY (Top-Left)
+      drawPixelRect(46, 24, 46, 34, "#f9e2af"); // gold frame
+      drawPixelRect(49, 27, 40, 28, "#74c7ec");
+      drawPixelRect(49, 41, 40, 14, "#a6e3a1");
+      drawPixelRect(48, 62, 18, 16, "#89b4fa");
+      drawPixelRect(50, 64, 14, 12, "#f9e2af");
+      drawPixelRect(70, 62, 18, 16, "#89b4fa");
+      drawPixelRect(72, 64, 14, 12, "#f38ba8");
+
+      // Wall Notes & Certificates (Top-Right)
+      drawPixelRect(220, 38, 14, 16, "#f9e2af");
+      drawPixelRect(222, 41, 10, 2, "#b59b62");
+      drawPixelRect(252, 44, 14, 16, "#89b4fa");
+      drawPixelRect(236, 62, 14, 16, "#f2efe9");
+
+      // 6. TROPHY CABINET & DESKTOP PC (Top Center — 02. ACHIEVEMENTS)
+      drawPixelRect(108, 82, 102, 34, "#6b4355");
+      drawPixelRect(108, 82, 102, 6, "#8a586e");
+      drawPixelRect(112, 116, 10, 14, "#4a2c3a");
+      drawPixelRect(196, 116, 10, 14, "#4a2c3a");
+      drawPixelRect(142, 112, 34, 18, "#f2efe9");
+
+      // Golden Trophy & Medals Stand (Left of Monitor)
+      drawPixelRect(113, 52, 22, 34, "#2e2842");
+      // Pixel Gold Trophy
+      drawPixelRect(119, 57, 10, 8, "#f9e2af");
+      drawPixelRect(122, 65, 4, 5, "#f9e2af");
+      drawPixelRect(118, 70, 12, 3, "#eab308");
+      // Silver/Gold Medals
+      drawPixelRect(117, 77, 5, 5, "#f9e2af");
+      drawPixelRect(125, 77, 5, 5, "#74c7ec");
+
+      // Monitor
+      drawPixelRect(138, 44, 58, 40, "#d8dce8");
+      drawPixelRect(142, 48, 50, 30, "#161320");
+      drawPixelRect(146, 53, 24, 3, "#f9e2af");
+      drawPixelRect(146, 59, 34, 3, "#89b4fa");
+      drawPixelRect(146, 65, 20, 3, "#74c7ec");
+      if (tickCount % 30 < 15) drawPixelRect(169, 65, 4, 3, "#f2efe9");
+      drawPixelRect(160, 84, 14, 6, "#9aa2b8");
+      drawPixelRect(152, 89, 30, 3, "#d8dce8");
+
+      // Keyboard & Mouse
+      drawPixelRect(142, 95, 44, 10, "#e6e9f2");
+      drawPixelRect(145, 97, 38, 6, "#7b8299");
+      drawPixelRect(192, 96, 8, 10, "#e6e9f2");
+
+      // 7. RETRO CONSOLE & BADMINTON RACKET (Left Wall)
+      drawPixelRect(38, 96, 46, 36, "#4f546b");
+      drawPixelRect(42, 100, 38, 24, "#161320");
+      const shuttleX = 48 + Math.floor(Math.sin(tickCount * 0.09) * 10 + 10);
+      drawPixelRect(shuttleX, 110, 4, 4, "#f9e2af");
+      drawPixelRect(45, 118, 12, 2, "#89b4fa");
+
+      drawPixelRect(44, 136, 34, 22, "#757c96");
+      drawPixelRect(48, 140, 26, 8, "#4c5166");
+      drawPixelRect(42, 152, 3, 14, "#d8dce8");
+      drawPixelRect(36, 164, 22, 12, "#9ca3bd");
+      drawPixelRect(40, 168, 4, 4, "#161320");
+      drawPixelRect(51, 168, 3, 3, "#f9e2af");
+
+      // 8. STUDY DESK, BOOKS & SHUTTLECOCK (Right Wall — 01. ABOUT ME & 03. SKILLS)
+      drawPixelRect(228, 124, 56, 38, "#6b4355");
+      drawPixelRect(228, 124, 56, 6, "#8a586e");
+      // Stack of Books
+      drawPixelRect(234, 118, 20, 7, "#89b4fa");
+      drawPixelRect(236, 112, 18, 6, "#f9e2af");
+      drawPixelRect(235, 125, 19, 6, "#74c7ec");
+      // Open Notebook
+      drawPixelRect(256, 132, 22, 26, "#f2efe9");
+      drawPixelRect(259, 136, 14, 2, "#89b4fa");
+      drawPixelRect(259, 141, 16, 2, "#9c96b8");
+      drawPixelRect(259, 146, 11, 2, "#9c96b8");
+
+      // 9. COZY BED & SMARTPHONE (Bottom Right — 05. CONTACT)
+      drawPixelRect(188, 198, 96, 62, "#6e3d4f");
+      drawPixelRect(258, 186, 26, 44, "#8a4f65");
+      drawPixelRect(192, 202, 74, 48, "#6a96cc");
+      drawPixelRect(192, 202, 74, 12, "#89b4fa");
+      drawPixelRect(254, 196, 18, 24, "#f2efe9");
+
+      // Glowing Smartphone on Bed (Contact Trigger)
+      const phoneGlow = tickCount % 40 < 20 ? "#74c7ec" : "#f9e2af";
+      drawPixelRect(212, 218, 12, 18, "#161320");
+      drawPixelRect(214, 220, 8, 13, phoneGlow);
+
+      // Cute Pixel Cat sitting on Bed
+      const catBob = Math.floor(Math.sin(tickCount * 0.1) * 1.2);
+      drawPixelRect(240, 192 + catBob, 12, 14, "#f5d7b8");
+      drawPixelRect(240, 189 + catBob, 3, 3, "#d99b66");
+      drawPixelRect(249, 189 + catBob, 3, 3, "#d99b66");
+      drawPixelRect(243, 195 + catBob, 2, 2, "#161320");
+      drawPixelRect(248, 195 + catBob, 2, 2, "#161320");
+
+      // 10. Draw White Pixel Outlines on Interactive Objects
+      if (showAllHotspots) {
+        Object.values(ROOM_OBJECTS).forEach(obj => drawWhitePixelOutline(obj, true));
+      }
+      if (hoveredObjectKey && ROOM_OBJECTS[hoveredObjectKey]) {
+        drawWhitePixelOutline(ROOM_OBJECTS[hoveredObjectKey], false);
+      } else if (selectedObjectKey && ROOM_OBJECTS[selectedObjectKey]) {
+        drawWhitePixelOutline(ROOM_OBJECTS[selectedObjectKey], false);
+      }
+
+      // 11. Draw Walking Chibi Hasan Avatar
+      updatePlayerMovement();
+      drawHasanRoomAvatar(player.x, player.y);
+
+      // 12. Day / Night Lighting
+      if (!isDayMode) {
+        rCtx.fillStyle = "rgba(16, 14, 32, 0.22)";
+        rCtx.fillRect(30, 10, 260, 264);
+        const grad = rCtx.createRadialGradient(167, 75, 5, 167, 75, 65);
+        grad.addColorStop(0, "rgba(137, 180, 250, 0.25)");
+        grad.addColorStop(1, "rgba(137, 180, 250, 0)");
+        rCtx.fillStyle = grad;
+        rCtx.fillRect(100, 30, 140, 100);
+      } else {
+        rCtx.fillStyle = "rgba(249, 226, 175, 0.14)";
+        rCtx.beginPath();
+        rCtx.moveTo(45, 25);
+        rCtx.lineTo(130, 25);
+        rCtx.lineTo(220, 230);
+        rCtx.lineTo(80, 230);
+        rCtx.closePath();
+        rCtx.fill();
+      }
+
+      requestAnimationFrame(renderRoom);
+    }
+
+    function updatePlayerMovement() {
+      const dx = player.targetX - player.x;
+      const dy = player.targetY - player.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist > 2) {
+        player.moving = true;
+        player.x += (dx / dist) * player.speed;
+        player.y += (dy / dist) * player.speed;
+        if (tickCount % 14 === 0) sfx.playStep();
+      } else {
+        player.x = player.targetX;
+        player.y = player.targetY;
+        player.moving = false;
+      }
+    }
+
+    function drawHasanRoomAvatar(cx, cy) {
+      const x = Math.round(cx - 12);
+      const y = Math.round(cy - 18);
+      const bob = player.moving ? Math.abs(Math.sin(tickCount * 0.35)) * 3 : Math.sin(tickCount * 0.08) * 1;
+
+      // Shadow
+      drawPixelRect(x + 4, y + 22, 16, 5, "rgba(15, 13, 24, 0.55)");
+
+      // Shoes (Red & Blue mismatching athletic sneakers like Hasan's PORKAB photo!)
+      const stepOffset = player.moving ? Math.sin(tickCount * 0.4) * 2 : 0;
+      drawPixelRect(x + 6, y + 19 + stepOffset, 4, 4, "#ef4444");
+      drawPixelRect(x + 14, y + 19 - stepOffset, 4, 4, "#3b82f6");
+
+      // Athletic Jacket (Dark Navy + Gold/Blue accent)
+      drawPixelRect(x + 6, y + 12 - bob, 12, 8, "#1e293b");
+      drawPixelRect(x + 8, y + 13 - bob, 8, 5, "#89b4fa");
+      drawPixelRect(x + 12, y + 15 - bob, 4, 3, "#f9e2af");
+
+      // Short Textured Hair
+      drawPixelRect(x + 5, y - 1 - bob, 14, 7, "#14111c");
+      drawPixelRect(x + 6, y - 3 - bob, 12, 6, "#231e33");
+
+      // Face
+      drawPixelRect(x + 6, y + 4 - bob, 12, 8, "#d99b78");
+      // Eyes
+      drawPixelRect(x + 8, y + 7 - bob, 2, 2, "#14111c");
+      drawPixelRect(x + 14, y + 7 - bob, 2, 2, "#14111c");
+    }
+
+    // =========================================================================
+    // 5. DIALOGUE & INTERACTION HANDLERS
+    // =========================================================================
+    function setDialogue(text, primaryBtnText = "LIHAT PRESTASI") {
+      const el = document.getElementById('dialogueText');
+      const btnLogin = document.getElementById('btnLogin');
+      btnLogin.textContent = primaryBtnText;
+
+      if (typewriterTimer) clearInterval(typewriterTimer);
+      el.textContent = "";
+      let idx = 0;
+
+      typewriterTimer = setInterval(() => {
+        if (idx < text.length) {
+          el.textContent += text.charAt(idx);
+          if (idx % 3 === 0) sfx.playBlip();
+          idx++;
+        } else {
+          clearInterval(typewriterTimer);
+        }
+      }, 16);
+    }
+
+    function focusObject(key, autoOpen = false) {
+      const obj = ROOM_OBJECTS[key];
+      if (!obj) return;
+
+      selectedObjectKey = key;
+      player.targetX = obj.walkTarget.x;
+      player.targetY = obj.walkTarget.y;
+      sfx.playSelect();
+
+      setDialogue(obj.dialogue, obj.loginLabel);
+
+      if (autoOpen) {
+        setTimeout(() => openModalSection(key), 220);
+      }
+    }
+
+    function triggerPrimaryAction() {
+      sfx.playSelect();
+      if (selectedObjectKey && ROOM_OBJECTS[selectedObjectKey]) {
+        openModalSection(selectedObjectKey);
+      } else {
+        openModalSection('trophies');
+      }
+    }
+
+    function triggerSecondaryAction() {
+      sfx.playSelect();
+      openModalSection('contact');
+    }
+
+    function resetRoom() {
+      sfx.playSelect();
+      player.targetX = 158;
+      player.targetY = 138;
+      selectedObjectKey = 'trophies';
+      setDialogue(
+        "HELLO, I'M HASAN! Muhammad Hassan Abdullah Alfaadhil — pelajar yang suka membaca, berolahraga, dan bermain game. Selamat datang di dunia kecil saya!",
+        "LIHAT PRESTASI"
+      );
+    }
+
+    function toggleHotspots() {
+      showAllHotspots = !showAllHotspots;
+      document.getElementById('btnEye').classList.toggle('active-toggle', showAllHotspots);
+      sfx.playSelect();
+      showToast(showAllHotspots ? "Sorot Objek Interaktif: AKTIF" : "Sorot Objek Interaktif: MATI");
+    }
+
+    function toggleSound() {
+      const isOn = sfx.toggle();
+      document.getElementById('btnSound').classList.toggle('active-toggle', isOn);
+      showToast(isOn ? "Audio 8-Bit: ON 🎵" : "Audio 8-Bit: MUTE 🔇");
+    }
+
+    function toggleDayNight() {
+      isDayMode = !isDayMode;
+      document.getElementById('btnExpand').classList.toggle('active-toggle', isDayMode);
+      document.getElementById('roomTimeBadge').textContent = isDayMode ? "DAYLIGHT MODE ☀️" : "NIGHT MODE 🌙";
+      sfx.playSelect();
+    }
+
+    function getCanvasCoords(evt) {
+      const rect = roomCanvas.getBoundingClientRect();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      return {
+        x: (clientX - rect.left) * (roomCanvas.width / rect.width),
+        y: (clientY - rect.top) * (roomCanvas.height / rect.height)
+      };
+    }
+
+    roomCanvas.addEventListener('mousemove', (e) => {
+      const pos = getCanvasCoords(e);
+      let found = null;
+      for (const key in ROOM_OBJECTS) {
+        const o = ROOM_OBJECTS[key];
+        if (pos.x >= o.x && pos.x <= o.x + o.w && pos.y >= o.y && pos.y <= o.y + o.h) {
+          found = key;
+          break;
+        }
+      }
+      hoveredObjectKey = found;
+      roomCanvas.style.cursor = found ? 'pointer' : 'crosshair';
+    });
+
+    roomCanvas.addEventListener('click', (e) => {
+      const pos = getCanvasCoords(e);
+      for (const key in ROOM_OBJECTS) {
+        const o = ROOM_OBJECTS[key];
+        if (pos.x >= o.x && pos.x <= o.x + o.w && pos.y >= o.y && pos.y <= o.y + o.h) {
+          const alreadySelected = (selectedObjectKey === key);
+          focusObject(key, alreadySelected);
+          return;
+        }
+      }
+      if (pos.x > 45 && pos.x < 275 && pos.y > 105 && pos.y < 255) {
+        player.targetX = pos.x;
+        player.targetY = pos.y;
+        sfx.playStep();
+      }
+    });
+
+    function movePlayerBy(dx, dy) {
+      const step = 18;
+      player.targetX = Math.max(50, Math.min(270, player.targetX + dx * step));
+      player.targetY = Math.max(110, Math.min(250, player.targetY + dy * step));
+      sfx.playStep();
+
+      for (const key in ROOM_OBJECTS) {
+        const o = ROOM_OBJECTS[key];
+        const dist = Math.hypot(player.targetX - o.walkTarget.x, player.targetY - o.walkTarget.y);
+        if (dist < 28 && selectedObjectKey !== key) {
+          selectedObjectKey = key;
+          setDialogue(o.dialogue, o.loginLabel);
+          break;
+        }
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      const lightboxOpen = !document.getElementById('lightboxModal').classList.contains('hidden');
+      const modalOpen = !document.getElementById('rpgModal').classList.contains('hidden');
+      if (e.key === 'Escape') {
+        if (lightboxOpen) { closeLightbox(); return; }
+        if (modalOpen) { closeModal(); return; }
+        openModalSection('about');
+        return;
+      }
+      if (modalOpen || lightboxOpen) return;
+
+      if (['ArrowUp', 'w', 'W'].includes(e.key)) { e.preventDefault(); movePlayerBy(0, -1); }
+      if (['ArrowDown', 's', 'S'].includes(e.key)) { e.preventDefault(); movePlayerBy(0, 1); }
+      if (['ArrowLeft', 'a', 'A'].includes(e.key)) { e.preventDefault(); movePlayerBy(-1, 0); }
+      if (['ArrowRight', 'd', 'D'].includes(e.key)) { e.preventDefault(); movePlayerBy(1, 0); }
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (document.activeElement.tagName !== 'BUTTON') {
+          e.preventDefault();
+          triggerPrimaryAction();
+        }
+      }
+    });
+
+    // =========================================================================
+    // 6. MODAL SECTIONS (01. ABOUT, 02. ACHIEVEMENTS, 03. SKILLS, 04. GALLERY, 05. CONTACT)
+    // =========================================================================
+    let miniGameLoopId = null;
+
+    function openModalSection(sectionKey) {
+      stopMiniGame();
+      const modal = document.getElementById('rpgModal');
+      const body = document.getElementById('modalBody');
+      const title = document.getElementById('modalTitle');
+      const icon = document.getElementById('modalIcon');
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      document.querySelectorAll('.modal-tab').forEach(btn => {
+        if (btn.dataset.tab === sectionKey) {
+          btn.classList.add('bg-[#89b4fa]', 'text-[#161320]', 'font-bold');
+          btn.classList.remove('bg-[#2e2842]', 'text-[#f2efe9]');
+        } else {
+          btn.classList.remove('bg-[#89b4fa]', 'text-[#161320]', 'font-bold');
+          btn.classList.add('bg-[#2e2842]', 'text-[#f2efe9]');
+        }
+      });
+
+      if (sectionKey === 'about') {
+        icon.textContent = "📖";
+        title.textContent = "01. ABOUT ME // MUHAMMAD_HASSAN.TXT";
+        body.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="md:col-span-2 space-y-4">
+              <div class="bg-[#231e33] p-4 sm:p-5 border-2 border-[#3c3557]">
+                <div class="inline-block px-2 py-0.5 bg-[#f9e2af] text-[#161320] text-[10px] font-bold mb-2">
+                  🕹️ HASAN — LEVEL UP YOUR DREAMS
+                </div>
+                <h3 class="text-base sm:text-lg text-[#89b4fa] font-bold mb-2">1. ABOUT ME</h3>
+                <p class="text-xs sm:text-sm text-[#e6e2dc] leading-relaxed">
+                  Halo! Saya <strong>Hasan</strong> (<strong>Muhammad Hassan Abdullah Alfaadhil</strong>), seorang pelajar yang senang mencoba hal baru dan mengembangkan kemampuan. Saya menikmati membaca buku, berolahraga, serta bermain game. Saya percaya pengalaman di sekolah, olahraga, dan esports mengajarkan kerja sama, disiplin, dan semangat untuk terus berkembang.
+                </p>
+              </div>
+
+              <div class="bg-[#231e33] p-4 border-2 border-[#3c3557]">
+                <h4 class="text-xs sm:text-sm text-[#f9e2af] font-bold mb-3">Highlight Pencapaian Utama</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                  <div class="p-3 bg-[#161320] border border-[#4a4468]">
+                    <div class="text-base mb-1">🏆</div>
+                    <div class="font-bold text-[#f9e2af]">Runner Up NTB</div>
+                    <div class="text-[11px] text-[#a6adc8]">School E-Sport Series NTB – MLBB SMP</div>
+                  </div>
+                  <div class="p-3 bg-[#161320] border border-[#4a4468]">
+                    <div class="text-base mb-1">🥇</div>
+                    <div class="font-bold text-[#74c7ec]">PORKAB 2025</div>
+                    <div class="text-[11px] text-[#a6adc8]">Kompetisi Bulutangkis PBSI Sumbawa</div>
+                  </div>
+                  <div class="p-3 bg-[#161320] border border-[#4a4468]">
+                    <div class="text-base mb-1">🎮</div>
+                    <div class="font-bold text-[#89b4fa]">Juara Tim</div>
+                    <div class="text-[11px] text-[#a6adc8]">Berbagai turnamen esports pelajar</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-[#231e33] p-4 border-2 border-[#3c3557] flex flex-col justify-between">
+              <div>
+                <h4 class="text-sm text-[#89b4fa] font-bold mb-3">PLAYER STATS</h4>
+                <ul class="text-xs space-y-2.5 text-[#cdd6f4]">
+                  <li><span class="text-[#f9e2af] font-bold">Nama:</span><br/>Muhammad Hassan Abdullah Alfaadhil</li>
+                  <li><span class="text-[#f9e2af] font-bold">Panggilan:</span> Hasan</li>
+                  <li><span class="text-[#f9e2af] font-bold">Status:</span> Pelajar & Atlet / Esports Player</li>
+                  <li><span class="text-[#f9e2af] font-bold">Domisili:</span> Sumbawa, NTB 🇮🇩</li>
+                  <li><span class="text-[#f9e2af] font-bold">Motto:</span> Level Up Your Dreams</li>
+                </ul>
+              </div>
+              <div class="mt-5 flex flex-col gap-2">
+                <button onclick="openModalSection('trophies')" class="pixel-btn pixel-btn-gold w-full py-2 text-xs font-bold">
+                  🏆 LIHAT PRESTASI
+                </button>
+                <button onclick="openModalSection('gallery')" class="pixel-btn pixel-btn-blue w-full py-2 text-xs font-bold">
+                  🖼️ GALERI FOTO
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (sectionKey === 'trophies') {
+        icon.textContent = "🏆";
+        title.textContent = "02. ACHIEVEMENTS // HALL_OF_FAME";
+        body.innerHTML = `
+          <div class="mb-4">
+            <h3 class="text-base sm:text-lg text-[#f9e2af] font-bold">02. ACHIEVEMENTS</h3>
+            <p class="text-xs text-[#a6adc8]">Catatan prestasi dan pengalaman kompetisi di bidang Esports, Bulutangkis, dan Gaming.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-[#231e33] border-2 border-[#f9e2af] p-4 flex flex-col justify-between">
+              <div>
+                <div class="text-2xl mb-2">🏆</div>
+                <span class="text-[10px] px-2 py-0.5 bg-[#161320] text-[#f9e2af] border border-[#f9e2af]">ESPORTS</span>
+                <h4 class="text-sm sm:text-base font-bold text-white mt-2 mb-1.5">Esports</h4>
+                <p class="text-xs text-[#cdd6f4] leading-relaxed">
+                  <strong>Runner Up School E-Sport Series NTB – MLBB SMP.</strong> Meraih peringkat kedua tingkat Provinsi Nusa Tenggara Barat bersama tim sekolah.
+                </p>
+              </div>
+              <button onclick="openLightbox(0)" class="pixel-btn pixel-btn-gold mt-4 py-1.5 text-[11px] font-bold w-full">
+                LIHAT BUKTI FOTO
+              </button>
+            </div>
+
+            <div class="bg-[#231e33] border-2 border-[#74c7ec] p-4 flex flex-col justify-between">
+              <div>
+                <div class="text-2xl mb-2">🥇</div>
+                <span class="text-[10px] px-2 py-0.5 bg-[#161320] text-[#74c7ec] border border-[#74c7ec]">BADMINTON</span>
+                <h4 class="text-sm sm:text-base font-bold text-white mt-2 mb-1.5">Badminton</h4>
+                <p class="text-xs text-[#cdd6f4] leading-relaxed">
+                  <strong>Dokumentasi prestasi dan pengalaman kompetisi bulutangkis, termasuk PORKAB Sumbawa 2025</strong> bersama skuad PBSI Kabupaten Sumbawa.
+                </p>
+              </div>
+              <button onclick="openLightbox(1)" class="pixel-btn pixel-btn-blue mt-4 py-1.5 text-[11px] font-bold w-full">
+                LIHAT FOTO PODIUM
+              </button>
+            </div>
+
+            <div class="bg-[#231e33] border-2 border-[#89b4fa] p-4 flex flex-col justify-between">
+              <div>
+                <div class="text-2xl mb-2">🎮</div>
+                <span class="text-[10px] px-2 py-0.5 bg-[#161320] text-[#89b4fa] border border-[#89b4fa]">GAMING</span>
+                <h4 class="text-sm sm:text-base font-bold text-white mt-2 mb-1.5">Gaming</h4>
+                <p class="text-xs text-[#cdd6f4] leading-relaxed">
+                  <strong>Memiliki pengalaman mengikuti kompetisi esports dan meraih penghargaan bersama tim</strong>, termasuk Juara 1 & Juara 3 turnamen pelajar.
+                </p>
+              </div>
+              <button onclick="openLightbox(3)" class="pixel-btn pixel-btn-purple mt-4 py-1.5 text-[11px] font-bold w-full">
+                LIHAT SERTIFIKAT
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (sectionKey === 'skills') {
+        icon.textContent = "⚡";
+        title.textContent = "03. SKILLS & INTERESTS // ABILITY_TREE";
+        body.innerHTML = `
+          <div class="mb-4">
+            <h3 class="text-base sm:text-lg text-[#74c7ec] font-bold">03. SKILLS & INTERESTS</h3>
+            <p class="text-xs text-[#a6adc8]">Kemampuan utama dan minat yang terus dikembangkan di sekolah, lapangan olahraga, maupun arena kompetisi.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-5">
+            ${SKILLS_LIST.map(s => `
+              <span class="px-3 py-1.5 bg-[#161320] border-2 border-[#89b4fa] text-[#f9e2af] text-xs font-bold">
+                ${s.icon} ${s.name}
+              </span>
+            `).join('')}
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            ${SKILLS_LIST.map(s => `
+              <div class="bg-[#231e33] p-3.5 border border-[#3c3557]">
+                <div class="flex items-center justify-between text-xs mb-1">
+                  <span class="font-bold text-white">${s.icon} ${s.name}</span>
+                  <span class="text-[#f9e2af]">LVL ${s.level}</span>
+                </div>
+                <div class="w-full h-3 bg-[#161320] border border-[#4a4468] p-0.5 mb-2">
+                  <div class="h-full bg-gradient-to-r from-[#89b4fa] to-[#74c7ec]" style="width:${s.level}%"></div>
+                </div>
+                <p class="text-[11px] text-[#a6adc8]">${s.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (sectionKey === 'gallery') {
+        icon.textContent = "🖼️";
+        title.textContent = "04. PIXEL MEMORY / GALLERY";
+        body.innerHTML = `
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-base sm:text-lg text-[#89b4fa] font-bold">04. PIXEL MEMORY / GALLERY</h3>
+              <p class="text-xs text-[#a6adc8]">Klik foto untuk memperbesar atau menggantinya. Path default: <code class="text-[#74c7ec]">./assets/...</code></p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="exportMediaConfigJson()" class="pixel-btn pixel-btn-purple px-2.5 py-1 text-[10px] font-bold">
+                📋 EXPORT JSON PATHS
+              </button>
+              <span class="px-2.5 py-1 bg-[#231e33] border border-[#4a4468] text-[11px] text-[#f9e2af]">6 MEMORIES</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            ${GALLERY_ITEMS.map((item, idx) => `
+              <div onclick="openLightbox(${idx})" class="bg-[#231e33] border-2 border-[#3c3557] hover:border-[#f9e2af] overflow-hidden cursor-pointer group flex flex-col justify-between transition-colors">
+                <div class="aspect-[4/3] bg-[#161320] overflow-hidden relative">
+                  <img
+                    id="galleryThumb_${idx}"
+                    src="${item.customDataUrl || item.assetPath}"
+                    alt="${item.caption}"
+                    class="w-full h-full object-cover photo-smooth group-hover:scale-105 transition-transform duration-200"
+                    onerror="renderGallerySvgFallback(this, ${idx})"
+                  />
+                  <span class="absolute top-2 right-2 bg-[#161320]/85 text-[#f9e2af] px-1.5 py-0.5 text-[10px] border border-[#4a4468]">
+                    #0${idx + 1}
+                  </span>
+                </div>
+                <div class="p-3">
+                  <h4 class="text-xs font-bold text-[#f2efe9] group-hover:text-[#f9e2af]">${item.caption}</h4>
+                  <p class="text-[10px] text-[#a6adc8] mt-1 line-clamp-2">${item.desc}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (sectionKey === 'console') {
+        icon.textContent = "🏸";
+        title.textContent = "MINI-GAME // BADMINTON_SMASH_8BIT";
+        body.innerHTML = `
+          <div class="flex flex-col items-center text-center">
+            <h3 class="text-base text-[#f9e2af] font-bold mb-1">BADMINTON SMASH & CATCH 8-BIT</h3>
+            <p class="text-xs text-[#a6adc8] mb-3">Gerakkan raket Hasan dengan Mouse, Sentuhan, atau Tombol Panah untuk memantulkan Shuttlecock emas!</p>
+            <div class="relative border-4 border-[#4a4468] bg-[#100e17] p-1">
+              <canvas id="miniGameCanvas" width="360" height="220" class="max-w-full block bg-[#161320]"></canvas>
+            </div>
+            <div class="flex items-center gap-4 mt-3 text-xs">
+              <span class="px-3 py-1 bg-[#231e33] border border-[#4a4468] text-[#f9e2af]">SCORE: <strong id="mgScore">0</strong></span>
+              <button onclick="startMiniGame()" class="pixel-btn pixel-btn-gold px-4 py-1.5 font-bold">RESTART MATCH</button>
+            </div>
+          </div>
+        `;
+        setTimeout(startMiniGame, 50);
+      } else if (sectionKey === 'contact') {
+        icon.textContent = "✉️";
+        title.textContent = "05. CONTACT // CONNECT_WITH_HASAN";
+        body.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-[#231e33] p-4 border-2 border-[#3c3557] flex flex-col justify-between">
+              <div>
+                <h3 class="text-base text-[#89b4fa] font-bold mb-2">05. CONTACT</h3>
+                <p class="text-xs text-[#cdd6f4] mb-4">
+                  Tertarik berdiskusi seputar olahraga, esports, kolaborasi pelajar, atau sekadar menyapa? Hubungi saya melalui kontak resmi di bawah ini:
+                </p>
+
+                <div class="space-y-3 text-xs">
+                  <div class="p-3 bg-[#161320] border border-[#4a4468] flex items-center justify-between gap-2">
+                    <div>
+                      <div class="text-[10px] text-[#f9e2af]">EMAIL</div>
+                      <a href="mailto:hasanfadhil012@gmail.com" class="text-white hover:text-[#89b4fa] font-bold break-all">
+                        hasanfadhil012@gmail.com
+                      </a>
+                    </div>
+                    <button onclick="copyText('hasanfadhil012@gmail.com', 'Email disalin!')" class="pixel-btn pixel-btn-blue px-2.5 py-1 text-[10px] font-bold shrink-0">
+                      SALIN
+                    </button>
+                  </div>
+
+                  <div class="p-3 bg-[#161320] border border-[#4a4468] flex items-center justify-between gap-2">
+                    <div>
+                      <div class="text-[10px] text-[#74c7ec]">INSTAGRAM</div>
+                      <a href="https://instagram.com/sanzuzezo" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#f9e2af] font-bold">
+                        @sanzuzezo
+                      </a>
+                    </div>
+                    <a href="https://instagram.com/sanzuzezo" target="_blank" rel="noopener noreferrer" class="pixel-btn pixel-btn-gold px-2.5 py-1 text-[10px] font-bold shrink-0">
+                      BUKA IG ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 p-3 bg-[#161320] border border-[#3c3557] text-[11px] text-[#a6adc8]">
+                🕹️ <strong class="text-[#f9e2af]">HASAN</strong> — LEVEL UP YOUR DREAMS
+              </div>
+            </div>
+
+            <div class="bg-[#231e33] p-4 border-2 border-[#3c3557]">
+              <h4 class="text-sm text-[#f9e2af] font-bold mb-2">Kirim Pesan Langsung</h4>
+              <form onsubmit="handleContactSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                  <label class="block mb-1 text-[#89b4fa]">Nama Pengirim</label>
+                  <input type="text" required placeholder="Nama kamu..." class="w-full px-3 py-2 bg-[#161320] border border-[#4a4468] text-white focus:border-[#89b4fa] focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block mb-1 text-[#89b4fa]">Email / Instagram</label>
+                  <input type="text" required placeholder="email@domain.com / @username" class="w-full px-3 py-2 bg-[#161320] border border-[#4a4468] text-white focus:border-[#89b4fa] focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block mb-1 text-[#89b4fa]">Pesan untuk Hasan</label>
+                  <textarea rows="3" required placeholder="Halo Hasan! Salam kenal..." class="w-full px-3 py-2 bg-[#161320] border border-[#4a4468] text-white focus:border-[#89b4fa] focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="pixel-btn pixel-btn-blue w-full py-2 font-bold">
+                  KIRIM PESAN ✉️
+                </button>
+              </form>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function closeModal() {
+      stopMiniGame();
+      const modal = document.getElementById('rpgModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      sfx.playCancel();
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      sfx.playSelect();
+      showToast("Pesan terkirim ke Hasan (hasanfadhil012@gmail.com)! ✨");
+      e.target.reset();
+    }
+
+    // =========================================================================
+    // 7. GALLERY SVG FALLBACK & LIGHTBOX LOGIC
+    // =========================================================================
+    function renderGallerySvgFallback(imgEl, idx) {
+      if (imgEl.dataset.fallbackApplied === "1") return;
+      imgEl.dataset.fallbackApplied = "1";
+      const item = GALLERY_ITEMS[idx];
+      if (!item) return;
+      const encoded = encodeURIComponent(item.svgIllustration.trim());
+      imgEl.src = `data:image/svg+xml;charset=utf-8,${encoded}`;
+    }
+
+    function openLightbox(idx) {
+      activeLightboxIndex = idx;
+      const item = GALLERY_ITEMS[idx];
+      if (!item) return;
+
+      const lb = document.getElementById('lightboxModal');
+      const media = document.getElementById('lightboxMedia');
+      document.getElementById('lightboxTitle').textContent = `MEMORY #0${idx + 1} // ${item.caption.toUpperCase()}`;
+      document.getElementById('lightboxCaption').textContent = item.caption;
+      document.getElementById('lightboxDesc').textContent = `${item.desc} (Path: ${item.assetPath})`;
+
+      media.innerHTML = `
+        <img
+          src="${item.customDataUrl || item.assetPath}"
+          alt="${item.caption}"
+          class="max-h-[58vh] w-auto object-contain photo-smooth border-2 border-[#4a4468]"
+          onerror="renderGallerySvgFallback(this, ${idx})"
+        />
+      `;
+
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      sfx.playSelect();
+    }
+
+    function closeLightbox() {
+      const lb = document.getElementById('lightboxModal');
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+    }
+
+    function replaceGalleryItemPhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        GALLERY_ITEMS[activeLightboxIndex].customDataUrl = ev.target.result;
+        openLightbox(activeLightboxIndex);
+        const thumb = document.getElementById(`galleryThumb_${activeLightboxIndex}`);
+        if (thumb) {
+          thumb.dataset.fallbackApplied = "0";
+          thumb.src = ev.target.result;
+        }
+        showToast("Foto galeri berhasil diperbarui! 🖼️");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // =========================================================================
+    // 8. PLAYABLE 8-BIT MINI-GAME (BADMINTON SMASH & CATCH)
+    // =========================================================================
+    function stopMiniGame() {
+      if (miniGameLoopId) {
+        cancelAnimationFrame(miniGameLoopId);
+        miniGameLoopId = null;
+      }
+    }
+
+    function startMiniGame() {
+      stopMiniGame();
+      const canvas = document.getElementById('miniGameCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let score = 0;
+      let paddleX = canvas.width / 2 - 26;
+      const paddleW = 52;
+      const shuttles = [];
+
+      const updatePaddle = (clientX) => {
+        const rect = canvas.getBoundingClientRect();
+        const relX = (clientX - rect.left) * (canvas.width / rect.width);
+        paddleX = Math.max(0, Math.min(canvas.width - paddleW, relX - paddleW / 2));
+      };
+
+      canvas.onmousemove = (e) => updatePaddle(e.clientX);
+      canvas.ontouchmove = (e) => {
+        e.preventDefault();
+        updatePaddle(e.touches[0].clientX);
+      };
+
+      let frame = 0;
+      function loop() {
+        frame++;
+        ctx.fillStyle = "#161320";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Badminton Court Net Line
+        ctx.fillStyle = "#2e2842";
+        ctx.fillRect(0, canvas.height - 32, canvas.width, 2);
+
+        if (frame % 30 === 0) {
+          shuttles.push({
+            x: 14 + Math.random() * (canvas.width - 28),
+            y: -10,
+            speed: 2.1 + Math.random() * 1.8,
+            gold: Math.random() > 0.72
+          });
+        }
+
+        for (let i = shuttles.length - 1; i >= 0; i--) {
+          const s = shuttles[i];
+          s.y += s.speed;
+
+          // Draw Pixel Shuttlecock
+          ctx.fillStyle = s.gold ? "#f9e2af" : "#ffffff";
+          ctx.fillRect(Math.round(s.x - 2), Math.round(s.y), 10, 6);
+          ctx.fillStyle = s.gold ? "#eab308" : "#89b4fa";
+          ctx.fillRect(Math.round(s.x), Math.round(s.y + 6), 6, 4);
+
+          if (s.y + 10 >= canvas.height - 18 && s.x + 10 >= paddleX && s.x <= paddleX + paddleW) {
+            score += s.gold ? 30 : 10;
+            const scoreEl = document.getElementById('mgScore');
+            if (scoreEl) scoreEl.textContent = score;
+            sfx.playSmash();
+            shuttles.splice(i, 1);
+            continue;
+          }
+
+          if (s.y > canvas.height) shuttles.splice(i, 1);
+        }
+
+        // Draw Player Racket Paddle
+        ctx.fillStyle = "#89b4fa";
+        ctx.fillRect(Math.round(paddleX), canvas.height - 16, paddleW, 8);
+        ctx.fillStyle = "#f9e2af";
+        ctx.fillRect(Math.round(paddleX + 4), canvas.height - 16, paddleW - 8, 3);
+
+        miniGameLoopId = requestAnimationFrame(loop);
+      }
+
+      loop();
+    }
+
+    // =========================================================================
+    // 9. CLIPBOARD, TOAST & INIT
+    // =========================================================================
+    function copyText(text, msg) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      sfx.playSelect();
+      showToast(msg);
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => box.classList.add('hidden'), 2500);
+    }
+
+    window.addEventListener('load', () => {
+      applyProfileSrc(customProfileDataUrl || MEDIA_PATHS.profilePhoto);
+      drawHasanPortrait('portraitCanvasDesktop', false);
+      drawHasanPortrait('portraitCanvasMobile', false);
+
+      setInterval(() => {
+        drawHasanPortrait('portraitCanvasDesktop', true);
+        drawHasanPortrait('portraitCanvasMobile', true);
+        setTimeout(() => {
+          drawHasanPortrait('portraitCanvasDesktop', false);
+          drawHasanPortrait('portraitCanvasMobile', false);
+        }, 160);
+      }, 3800);
+
+      renderRoom();
+    });
+  </script>
+</body>
+</html>
